@@ -102,10 +102,6 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
                   'DASH',
                   widget.streamService.dashStreamUrl,
                 ),
-                _buildCopyableUrl(
-                  'RTMP',
-                  widget.streamService.rtmpStreamUrl,
-                ),
               ],
             ),
           ),
