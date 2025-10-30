@@ -7,9 +7,9 @@ class VideoPlayerWidget extends StatefulWidget {
   final String streamUrl;
 
   const VideoPlayerWidget({
-    Key? key,
+    super.key,
     required this.streamUrl,
-  }) : super(key: key);
+  });
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -123,6 +123,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.black.withOpacity(0.5),
             blurRadius: 20,
             spreadRadius: 5,
@@ -176,9 +177,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
+              // ignore: deprecated_member_use
               Colors.black.withOpacity(0.7),
               Colors.transparent,
               Colors.transparent,
+              // ignore: deprecated_member_use
               Colors.black.withOpacity(0.7),
             ],
             stops: const [0.0, 0.3, 0.7, 1.0],
@@ -188,17 +191,17 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Top controls
-            Padding(
-              padding: const EdgeInsets.all(16),
+            const Padding(
+              padding: EdgeInsets.all(16),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.circle,
                     color: Colors.red,
                     size: 12,
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: 8),
+                  Text(
                     'LIVE',
                     style: TextStyle(
                       color: Colors.white,
@@ -208,7 +211,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 ],
               ),
             ),
-            
+
             // Bottom controls
             Padding(
               padding: const EdgeInsets.all(16),
@@ -216,9 +219,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 children: [
                   IconButton(
                     icon: Icon(
-                      _controller!.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
+                      _controller!.value.isPlaying ? Icons.pause : Icons.play_arrow,
                       color: Colors.white,
                     ),
                     onPressed: _togglePlayPause,
@@ -235,6 +236,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                       value: _volume,
                       onChanged: _setVolume,
                       activeColor: Colors.white,
+                      // ignore: deprecated_member_use
                       inactiveColor: Colors.white.withOpacity(0.3),
                     ),
                   ),
@@ -262,9 +264,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           color: Colors.red,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(
               Icons.circle,
               color: Colors.white,
@@ -311,6 +313,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               _errorMessage ?? 'Unknown error',
               textAlign: TextAlign.center,
               style: TextStyle(
+                // ignore: deprecated_member_use
                 color: Colors.white.withOpacity(0.7),
               ),
             ),

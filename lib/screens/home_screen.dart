@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import '../widgets/video_player_widget.dart';
 import '../widgets/stream_info_panel.dart';
-import '../widgets/control_panel.dart';
+// import '../widgets/control_panel.dart';
 import '../services/stream_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             // Header
             _buildHeader(),
-            
+
             // Main Content
             Expanded(
               child: _isLoading
@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Theme.of(context).colorScheme.surface,
         border: Border(
           bottom: BorderSide(
+            // ignore: deprecated_member_use
             color: Colors.white.withOpacity(0.1),
             width: 1,
           ),
@@ -193,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _errorMessage ?? 'Unknown error',
               textAlign: TextAlign.center,
               style: TextStyle(
+                // ignore: deprecated_member_use
                 color: Colors.white.withOpacity(0.7),
               ),
             ),

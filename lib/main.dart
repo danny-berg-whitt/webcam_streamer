@@ -7,7 +7,7 @@ void main() {
 }
 
 class WebcamStreamingApp extends StatelessWidget {
-  const WebcamStreamingApp({Key? key}) : super(key: key);
+  const WebcamStreamingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,7 @@ class WebcamStreamingApp extends StatelessWidget {
         colorScheme: ColorScheme.dark(
           primary: Colors.blue.shade400,
           secondary: Colors.blueAccent,
+          // ignore: deprecated_member_use
           background: const Color(0xFF0a0a0a),
           surface: const Color(0xFF1a1a1a),
         ),

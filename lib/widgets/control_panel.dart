@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class ControlPanel extends StatelessWidget {
-  const ControlPanel({Key? key}) : super(key: key);
+  const ControlPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +12,17 @@ class ControlPanel extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Stream Controls',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           // Add control buttons here as needed
         ],
       ),
