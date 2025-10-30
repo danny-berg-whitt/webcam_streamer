@@ -106,6 +106,4 @@ The nginx configuration in the Kubernetes deployment already includes CORS heade
 
 ## License
 
-[MIT License](LICENSE.md)
-
-## 
+[MIT License](LICENSE)
