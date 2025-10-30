@@ -7,9 +7,9 @@ class StreamInfoPanel extends StatefulWidget {
   final StreamService streamService;
 
   const StreamInfoPanel({
-    Key? key,
+    super.key,
     required this.streamService,
-  }) : super(key: key);
+  });
 
   @override
   State<StreamInfoPanel> createState() => _StreamInfoPanelState();
@@ -17,7 +17,6 @@ class StreamInfoPanel extends StatefulWidget {
 
 class _StreamInfoPanelState extends State<StreamInfoPanel> {
   Timer? _updateTimer;
-  Map<String, dynamic> _streamStats = {};
 
   @override
   void initState() {
@@ -31,11 +30,9 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
 
   Future<void> _updateStreamInfo() async {
     try {
-      final stats = await widget.streamService.getStreamStats();
+      await widget.streamService.getStreamStats();
       if (mounted) {
-        setState(() {
-          _streamStats = stats;
-        });
+        setState(() {});
       }
     } catch (e) {
       // Handle error silently
@@ -55,6 +52,7 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
+          // ignore: deprecated_member_use
           color: Colors.white.withOpacity(0.1),
         ),
       ),
@@ -127,6 +125,7 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
             child: Text(
               label,
               style: TextStyle(
+                // ignore: deprecated_member_use
                 color: Colors.white.withOpacity(0.6),
                 fontSize: 14,
               ),
@@ -168,6 +167,7 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
           Text(
             label,
             style: TextStyle(
+              // ignore: deprecated_member_use
               color: Colors.white.withOpacity(0.6),
               fontSize: 12,
             ),
@@ -176,6 +176,7 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.3),
               borderRadius: BorderRadius.circular(6),
             ),
