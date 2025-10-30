@@ -1,11 +1,6 @@
-// lib/services/stream_service.dart
 import 'package:http/http.dart' as http;
-// import 'dart:convert';
 
 class StreamService {
-  // Update these with your actual server address
-  // For local testing: 'localhost:30080'
-  // For production: your domain or IP
   final String serverAddress = 'fishcam.berg-whitt.com';
 
   String get hlsStreamUrl => 'https://$serverAddress/hls/stream/index.m3u8';
