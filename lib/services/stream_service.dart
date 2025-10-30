@@ -1,17 +1,11 @@
-// lib/services/stream_service.dart
 import 'package:http/http.dart' as http;
-// import 'dart:convert';
 
 class StreamService {
-  // Update these with your actual server address
-  // For local testing: 'localhost:30080'
-  // For production: your domain or IP
-  final String serverAddress = 'localhost:30080';
+  final String serverAddress = 'fishcam.berg-whitt.com';
 
-  String get hlsStreamUrl => 'http://$serverAddress/hls/webcam.m3u8';
-  String get dashStreamUrl => 'http://$serverAddress/dash/webcam.mpd';
-  String get rtmpStreamUrl => 'rtmp://$serverAddress:31935/live/webcam';
-  String get statUrl => 'http://$serverAddress/stat';
+  String get hlsStreamUrl => 'https://$serverAddress/hls/stream/index.m3u8';
+  String get dashStreamUrl => 'http:s//$serverAddress/dash/stream.mpd';
+  String get statUrl => 'https://$serverAddress/stat';
 
   Future<bool> checkStreamAvailability() async {
     try {

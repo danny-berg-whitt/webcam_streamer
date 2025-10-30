@@ -1,7 +1,6 @@
-// lib/widgets/video_player_widget.dart
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:async';
 
 class VideoPlayerWidget extends StatefulWidget {
   final String streamUrl;
@@ -22,8 +21,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   String? _errorMessage;
   bool _showControls = true;
   Timer? _controlsTimer;
-  bool _isMuted = false;
-  double _volume = 1.0;
 
   @override
   void initState() {
@@ -68,26 +65,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           _controller!.pause();
         } else {
           _controller!.play();
-        }
-      });
-    }
-  }
-
-  void _toggleMute() {
-    if (_controller != null) {
-      setState(() {
-        _isMuted = !_isMuted;
-        _controller!.setVolume(_isMuted ? 0.0 : _volume);
-      });
-    }
-  }
-
-  void _setVolume(double volume) {
-    if (_controller != null) {
-      setState(() {
-        _volume = volume;
-        if (!_isMuted) {
-          _controller!.setVolume(volume);
         }
       });
     }
@@ -160,7 +137,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           children: [
             VideoPlayer(_controller!),
             if (_showControls) _buildControls(),
-            _buildLiveIndicator(),
           ],
         ),
       ),
@@ -207,8 +183,37 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                ],
+                    SizedBox(width: 8),
+                    Text(
+                      'LIVE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            if (!_controller!.value.isPlaying)
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      color: Colors.grey,
+                      size: 12,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'PAUSED',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
