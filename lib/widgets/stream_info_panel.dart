@@ -1,5 +1,6 @@
 // lib/widgets/stream_info_panel.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/stream_service.dart';
 import 'dart:async';
 
@@ -17,6 +18,7 @@ class StreamInfoPanel extends StatefulWidget {
 
 class _StreamInfoPanelState extends State<StreamInfoPanel> {
   Timer? _updateTimer;
+  Map<String, dynamic> _streamStats = {};
 
   @override
   void initState() {
@@ -30,9 +32,11 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
 
   Future<void> _updateStreamInfo() async {
     try {
-      await widget.streamService.getStreamStats();
+      final stats = await widget.streamService.getStreamStats();
       if (mounted) {
-        setState(() {});
+        setState(() {
+          _streamStats = stats;
+        });
       }
     } catch (e) {
       // Handle error silently
@@ -56,28 +60,20 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
           color: Colors.white.withOpacity(0.1),
         ),
       ),
+// Updated _buildInfoItems section in StreamInfoPanel
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.info_outline,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Stream Information',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+          _buildInfoItem('Stream Name', 'webcam'),
+          _buildInfoItem('Protocol', 'HLS'),
+          _buildInfoItem('Resolution', '1280x720'),
+          _buildInfoItem('Frame Rate', '30 fps'),
+          _buildInfoItem('Bitrate', '2000 kbps'),
+          _buildInfoItem(
+            'Server',
+            widget.streamService.serverAddress,
           ),
+          const SizedBox(height: 8),
           const Divider(height: 1),
           Expanded(
             child: ListView(
@@ -104,6 +100,16 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
                 ),
               ],
             ),
+          ],
+          const SizedBox(height: 16),
+          _buildSectionTitle('Stream URLs'),
+          _buildCopyableUrl(
+            'HLS',
+            widget.streamService.hlsStreamUrl,
+          ),
+          _buildCopyableUrl(
+            'DASH',
+            widget.streamService.dashStreamUrl,
           ),
         ],
       ),
@@ -175,30 +181,36 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
               // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.3),
               borderRadius: BorderRadius.circular(6),
+              border: Border.all(
+                // ignore: deprecated_member_use
+                color: Colors.white.withOpacity(0.1),
+              ),
             ),
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
+                  child: SelectableText(
                     url,
                     style: const TextStyle(
                       fontSize: 12,
                       fontFamily: 'monospace',
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy, size: 16),
-                  onPressed: () {
-                    // Copy to clipboard functionality
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('URL copied to clipboard'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(text: url));
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('$label URL copied to clipboard'),
+                          duration: const Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
+                          width: 300,
+                        ),
+                      );
+                    }
                   },
                   tooltip: 'Copy URL',
                 ),
