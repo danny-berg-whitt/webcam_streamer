@@ -167,21 +167,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Top controls
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.circle,
-                    color: Colors.red,
-                    size: 12,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    'LIVE',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+            if (_controller!.value.isPlaying)
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      color: Colors.red,
+                      size: 12,
                     ),
                     SizedBox(width: 8),
                     Text(
@@ -215,8 +209,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   ],
                 ),
               ),
-            ),
-
             // Bottom controls
             Padding(
               padding: const EdgeInsets.all(16),
@@ -229,61 +221,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     ),
                     onPressed: _togglePlayPause,
                   ),
-                  IconButton(
-                    icon: Icon(
-                      _isMuted ? Icons.volume_off : Icons.volume_up,
-                      color: Colors.white,
-                    ),
-                    onPressed: _toggleMute,
-                  ),
-                  Expanded(
-                    child: Slider(
-                      value: _volume,
-                      onChanged: _setVolume,
-                      activeColor: Colors.white,
-                      // ignore: deprecated_member_use
-                      inactiveColor: Colors.white.withOpacity(0.3),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '${(_volume * 100).toInt()}%',
-                    style: const TextStyle(color: Colors.white),
-                  ),
                 ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLiveIndicator() {
-    return Positioned(
-      top: 16,
-      right: 16,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.circle,
-              color: Colors.white,
-              size: 8,
-            ),
-            SizedBox(width: 6),
-            Text(
-              'LIVE',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
               ),
             ),
           ],
