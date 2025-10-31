@@ -75,30 +75,50 @@ class _StreamInfoPanelState extends State<StreamInfoPanel> {
           ),
           const SizedBox(height: 8),
           const Divider(height: 1),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                _buildInfoItem('Stream Name', 'webcam'),
-                _buildInfoItem('Protocol', 'HLS'),
-                _buildInfoItem('Resolution', '1280x720'),
-                _buildInfoItem('Frame Rate', '30 fps'),
-                _buildInfoItem('Bitrate', '2000 kbps'),
-                _buildInfoItem(
-                  'Server',
-                  widget.streamService.serverAddress,
-                ),
-                const SizedBox(height: 16),
-                _buildSectionTitle('Stream URLs'),
-                _buildCopyableUrl(
-                  'HLS',
-                  widget.streamService.hlsStreamUrl,
-                ),
-                _buildCopyableUrl(
-                  'DASH',
-                  widget.streamService.dashStreamUrl,
-                ),
-              ],
+          const SizedBox(height: 8),
+          _buildSectionTitle('Server Status'),
+          if (_streamStats.isNotEmpty) ...[
+            _buildInfoItem(
+              'Status',
+              _streamStats['status'] ?? 'unknown',
+            ),
+            if (_streamStats['nginx_version'] != null)
+              _buildInfoItem(
+                'Nginx Version',
+                _streamStats['nginx_version'],
+              ),
+            if (_streamStats['rtmp_version'] != null)
+              _buildInfoItem(
+                'RTMP Version',
+                _streamStats['rtmp_version'],
+              ),
+            if (_streamStats['uptime'] != null)
+              _buildInfoItem(
+                'Uptime',
+                _streamStats['uptime'],
+              ),
+            if (_streamStats['clients'] != null)
+              _buildInfoItem(
+                'Active Clients',
+                _streamStats['clients'].toString(),
+              ),
+            if (_streamStats['bandwidth_in'] != null)
+              _buildInfoItem(
+                'Bandwidth In',
+                _streamStats['bandwidth_in'],
+              ),
+            if (_streamStats['bandwidth_out'] != null)
+              _buildInfoItem(
+                'Bandwidth Out',
+                _streamStats['bandwidth_out'],
+              ),
+          ] else ...[
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'Loading server statistics...',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
             ),
           ],
           const SizedBox(height: 16),
